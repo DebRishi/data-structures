@@ -4,31 +4,24 @@
 using namespace std;
 
 class Solution {
-    public:
-    bool bipartiteGraph(vector<vector<int>>& graph) {
+public:
+    bool isBipartite(vector<vector<int>>& graph) {
         int n = graph.size();
         vector<int> color(n,-1);
         queue<int> queue;
-        
         for(int i = 0 ; i < n ; i++) {
             if(color[i] == -1) {
                 queue.push(i);
-                color[i] = 1;
+                color[i] = 0;
                 while(!queue.empty()) {
-                    int n = queue.size();
-                    while(n-- > 0) {
-                        int curr = queue.front();
-                        queue.pop();
-
-                        for(int node : graph[curr]) {
-                            if(color[node] == -1) {
-                                color[node] = !color[curr];
-                                queue.push(node);
-                            }
-                            else {
-                                if(color[node] == color[curr])
-                                    return false;
-                            }
+                    int curr = queue.front();
+                    queue.pop();
+                    for(int node : graph[curr]) {
+                        if(color[node] != -1 && color[node] != !color[curr])
+                            return false;
+                        if(color[node] == -1) {
+                            color[node] = !color[curr];
+                            queue.push(node);
                         }
                     }
                 }
@@ -60,7 +53,7 @@ int main() {
     cout<<endl;
 
     Solution s;
-    cout<<s.bipartiteGraph(graph);
+    cout<<s.isBipartite(graph);
 
     return 0;
 }

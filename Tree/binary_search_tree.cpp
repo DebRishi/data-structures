@@ -145,6 +145,18 @@ Node * remove(Node * root,int x) {
     return root;
 }
 
+
+// LowestCommonAnsestor in BST O(h) = O(log(n))
+Node* LCA(Node* root,int key1,int key2) {
+    if(!root)
+        return 0;
+    if(root->data < key1 && root->data < key2)
+        return LCA(root->right,key1,key2);
+    if(root->data > key1 && root->data > key2)
+        return LCA(root->left,key1,key2);
+    return root;
+}
+
 bool checkBST(Node * root,int min = INT_MIN,int max = INT_MAX) {
     if(root == 0) {
         return true;
